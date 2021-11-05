@@ -1,14 +1,31 @@
-import React, { Component } from "react";
-import "./App.css";
-
-class App extends Component {
+import React from 'react';
+class App extends React.Component {
+    componentDidMount() {
+        console.log(`App Mount`);
+        console.log(`App 组件对应的fiber节点: `, this._reactInternals);
+    }
     render() {
         return (
-            <div className="App">
-                <h1> Hello, World! </h1>
-            </div>
+        <div className="app">
+            <header>header</header>
+            <Content />
+        </div>
         );
     }
 }
 
+class Content extends React.Component {
+    componentDidMount() {
+        console.log(`Content Mount`);
+        console.log(`Content 组件对应的fiber节点: `, this._reactInternals);
+    }
+    render() {
+        return (
+        <React.Fragment>
+            <p>1</p>
+            <p>2</p>
+        </React.Fragment>
+        );
+    }
+}
 export default App;
