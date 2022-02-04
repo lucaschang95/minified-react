@@ -1,14 +1,23 @@
-import React, { Component } from "react";
-import "./App.css";
+import React, { useEffect, useState, useCallback } from 'react';
+const Child = (props) => {
+    console.log('child render');
+    return <>{props.count}</>;
+};
 
-class App extends Component {
-    render() {
-        return (
-            <div className="App">
-                <h1> Hello, World1! </h1>
-            </div>
-        );
-    }
+function App() {
+    const [count, setCount] = useState(0);
+
+    const add = () => {
+        debugger;
+        setCount((c) => c);
+    };
+
+    return (
+        <>
+            <button onClick={add}>+1</button>
+            <Child count={count} />
+        </>
+    );
 }
 
 export default App;
