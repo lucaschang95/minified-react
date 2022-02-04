@@ -1,2 +1,3 @@
 # minified-react
-react, babel, webpack
+
+react, babel, webpack, react-router
