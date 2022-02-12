@@ -1,25 +1,76 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { BrowserRouter, Routes, Route, Outlet, Link } from 'react-router-dom';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
+import {
+    BrowserRouter,
+    HashRouter,
+    Routes,
+    Route,
+    Outlet,
+    Link,
+    Navigate,
+    matchPath,
+    useLocation,
+    UNSAFE_RouteContext as RouteContext,
+} from 'react-router-dom';
+
+// export default function App() {
+//     return (
+//         <BrowserRouter>
+//             <div>
+//                 <h1>Basic Example</h1>
+//                 <Routes>
+//                     <Route path="/" element={<Layout />}>
+//                         <Route index element={<Home />} />
+//                         <Route path="/about" element={<About />} />
+//                         <Route path="/dashboard" element={<Dashboard />} />
+//                         <Route path="/navigate" element={<Navi />} />
+//                         <Route path="/shop/:id" element={<Shop />} />
+//                         <Route path="*" element={<NoMatch />} />
+//                     </Route>
+//                 </Routes>
+//             </div>
+//         </BrowserRouter>
+//     );
+// }
 
 export default function App() {
     return (
-        <BrowserRouter>
-            <div>
-                <h1>Basic Example</h1>
-                <Routes>
-                    <Route path="/" element={<Layout />}>
-                        <Route index element={<Home />} />
-                        <Route path="about" element={<About />} />
-                        <Route path="dashboard" element={<Dashboard />} />
-                        <Route path="*" element={<NoMatch />} />
-                    </Route>
-                </Routes>
-            </div>
-        </BrowserRouter>
+        <div>
+            app
+            <ChildComp>
+                {slotComp}
+            </ChildComp>
+        </div>
     );
 }
 
+function ChildComp(props) {
+    return (
+        <div>
+            childcomp
+            {props.children({
+                name: 'test',
+            })}
+        </div>
+    );
+}
+
+function slotComp(props) {
+    return <div>slot{props.name}</div>;
+}
+
+function Shop() {
+    const location = useLocation();
+    const context = useContext(RouteContext);
+    return <div>shop</div>;
+}
+
+function Navi() {
+    return <Navigate to="/about" replace={true} />;
+}
+
 function Layout() {
+    const context = useContext(RouteContext);
+    console.log('context :>> ', context);
     return (
         <div>
             {/* A "layout route" is a good place to put markup you want to
@@ -36,14 +87,21 @@ function Layout() {
                         <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li>
+                        <Link to="/navigate">navigate</Link>
+                    </li>
+                    <li>
+                        <Link to="/shop/a">shop-a</Link>
+                    </li>
+                    <li>
+                        <Link to="/shop/b">shop-b</Link>
+                    </li>
+                    <li>
                         <Link to="/nothing-here">Nothing Here</Link>
                     </li>
                 </ul>
             </nav>
 
             <hr />
-            <div>next is outlet</div>
-            <Outlet />
             <Outlet />
         </div>
     );
